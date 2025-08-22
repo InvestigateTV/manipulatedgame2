@@ -53,16 +53,17 @@
   grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin-bottom: 20px;
+  justify-items: center;
 }
 
-.quiz-container .option {
-  border: none;
-  padding: 20px 28px;
-  font-size: 18px;
-  background: #9EB8EB;
-  color: #fff;
-  font-weight: bold;
+.quiz-container .image-option {
+  border: 3px solid transparent;
   border-radius: 8px;
+  cursor: pointer;
+  max-width: 100%;
+  max-height: 30vh;
+  display: block;
+  object-fit: contain;
 }
 
 .quiz-container button {
@@ -73,14 +74,14 @@
   pointer-events: none;
 }
 
-.option.correct {
+.image-option.correct {
   background: #A3C76E;
   color: #222;
   position: relative; 
   border: 3px solid #415C1D; 
 }
 
-.option.correct::after {
+.image-option.correct::after {
   content: "Correct!";
   position: absolute;
   top: -28px;
@@ -96,13 +97,13 @@
   border: 3px solid #415C1D
 }
 
-.option.incorrect {
+.image-option.incorrect {
   background: #EF5D4C;
   position: relative;
   border: 3px solid #b92b2b; 
 }
 
-.option.incorrect::after {
+.image-option.incorrect::after {
   content: "Incorrect";
   position: absolute;
   top: -28px;
@@ -131,6 +132,7 @@
   letter-spacing: 3px;
   cursor: pointer;
   width: 100%;
+  margin-top: 10px;
 }
 
 .quiz-result {
@@ -159,6 +161,21 @@
   flex-shrink: 3;
   gap: 8px;
   text-align: center;
+}
+
+.quiz-result .question-container .result-images {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+}
+
+.quiz-result .question-container .result-image {
+    max-height: 10vh; 
+    max-width: 50%; /* Adjust width for single image */
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
 }
 
 .quiz-result .question-container.incorrect {
@@ -235,7 +252,7 @@
 }
 
 .start-btn-container .start-img img{
-	display: block;
+	display: flex;
     max-width: 100%;
     height: auto;
     margin: 0 auto;
@@ -318,14 +335,18 @@
 
   
   <body style="background-color:#000000;">
-    	<div class="start-img">
-      <img src="https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/manipulated_matchup.png" alt="Illustration of a hand below a glowing set of lines and dots designed to represent artificial intelligence. The words manipulated matchup are printed above the illustration" width=100% margin=0 ></div>
-      <br>
-     <div class="start-btn-container">
-     <div class="start-msg">
-     <p>Can you tell the difference between an <br> AI-manipulated image and the original?</p>
-      <br></div></div><div class="start-btn-container">
-      <button class="start-btn">Start Quiz</button></div>
+    <div id="start-screen-wrapper">
+        <div class="start-img">
+            <img src="https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/manipulated_matchup.png" alt="Illustration of a hand below a glowing set of lines and dots designed to represent artificial intelligence. The words manipulated matchup are printed above the illustration" width=100% margin=0 >
+        </div>
+        <br>
+        <div class="start-btn-container">
+            <div class="start-msg">
+                <p>Can you tell the difference between an <br> AI-manipulated image and the original?</p>
+                <br>
+            </div>
+            <button class="start-btn">Start Quiz</button>
+        </div></div>
     
 
     <div class="quiz-container">
@@ -347,36 +368,54 @@
 
   
 <script>
-  let quizData = [
+   let quizData = [
     {
-      question: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-1.png",
-      options: ["AI", "Not AI"],
-      correct: "AI",
+      id: 1,
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-1.png",
+      notAiImage: "https://via.placeholder.com/300x200?text=Original+Image+1", // Placeholder
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image is AI-generated?",
+      explanation: "This image exhibits typical characteristics of AI generation, such as subtle inconsistencies in texture and lighting that are uncommon in real photographs."
     },
     {
-      question: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-2.png",
-      options: ["AI", "Not AI"],
-      correct: "Not AI",
+      id: 2,
+      aiImage: "https://via.placeholder.com/300x200?text=AI+Image+2", // Placeholder
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-2.png",
+      correctAnswerIsAI: false,
+      questionPrompt: "Which image is NOT AI-generated?",
+      explanation: "The clarity and natural detail in this image are consistent with an original photograph, lacking the common tells of AI manipulation."
     },
     {
-      question: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-3.png",
-      options: ["AI", "Not AI"],
-      correct: "AI",
+      id: 3,
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-3.png",
+      notAiImage: "https://via.placeholder.com/300x200?text=Original+Image+3", // Placeholder
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image is AI-generated?",
+      explanation: "Look closely at the background elements; AI often struggles with realistic depth and coherent details in complex scenes, making this image appear artificial."
     },
     {
-      question: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-4.png",
-      options: ["AI", "Not AI"],
-      correct: "Not AI",
+      id: 4,
+      aiImage: "https://via.placeholder.com/300x200?text=AI+Image+4", // Placeholder
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-4.png",
+      correctAnswerIsAI: false,
+      questionPrompt: "Which image is NOT AI-generated?",
+      explanation: "The composition and fine details, especially around the edges of objects, suggest this is an authentic image rather than one produced by AI."
     },
     {
-      question: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-5.png",
-      options: ["AI", "Not AI"],
-      correct: "Not AI",
+      id: 5,
+      aiImage: "https://via.placeholder.com/300x200?text=AI+Image+5", // Placeholder
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-5.png",
+      correctAnswerIsAI: false,
+      questionPrompt: "Which image is NOT AI-generated?",
+      explanation: "The subtle imperfections and realistic rendering of light and shadow point to this being an original photograph, not an AI creation."
     },
     {
-      question: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-6.png",
-      options: ["AI", "Not AI"],
-      correct: "AI",
+      id: 6,
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-6.png",
+      notAiImage: "https://via.placeholder.com/300x200?text=Original+Image+6", // Placeholder
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image is AI-generated?",
+      explanation: "Notice the slight blurring or unusual patterns in the background, a common tell for AI-generated imagery that struggles with realism in secondary elements."
     },
   ];
 
@@ -387,7 +426,6 @@
   const quizResult = document.querySelector(".quiz-result");
   const startBtnContainer = document.querySelector(".start-btn-container");
   const startBtn = document.querySelector(".start-btn");
-  const questionImage = document.getElementById("question-image");
 
   let questionNumber = 0;
   let score = 0;
@@ -400,24 +438,35 @@
   const resetLocalStorage = () => {
     for (let i = 0; i < MAX_QUESTIONS; i++) {
       localStorage.removeItem(`userAnswer_${i}`);
+ localStorage.removeItem(`userAnswerImageUrl_${i}`);
     }
   };
 
-  const checkAnswer = (e) => {
-    const userAnswer = e.target.textContent;
-    const correctAnswer = quizData[questionNumber].correct;
+   const checkAnswer = (e) => {
+    const clickedImage = e.target;
+    const userAnswerImageUrl = clickedImage.src;
+    const currentQuestion = quizData[questionNumber];
 
-    if (userAnswer === correctAnswer) {
-      score++;
-      e.target.classList.add("correct");
+    let isCorrect;
+    if (currentQuestion.correctAnswerIsAI) {
+      isCorrect = (userAnswerImageUrl === currentQuestion.aiImage);
     } else {
-      e.target.classList.add("incorrect");
+      isCorrect = (userAnswerImageUrl === currentQuestion.notAiImage);
     }
 
-    localStorage.setItem(`userAnswer_${questionNumber}`, userAnswer);
+    if (isCorrect) {
+      score++;
+      clickedImage.classList.add("correct");
+    } else {
+      clickedImage.classList.add("incorrect");
+    }
 
-    const allOptions = document.querySelectorAll(".option");
-    allOptions.forEach((o) => o.classList.add("disabled"));
+    localStorage.setItem(`userAnswer_${questionNumber}`, isCorrect ? "Correct" : "Incorrect");
+    localStorage.setItem(`userAnswerImageUrl_${questionNumber}`, userAnswerImageUrl);
+
+
+    const allImageOptions = document.querySelectorAll(".image-option");
+    allImageOptions.forEach((img) => img.classList.add("disabled"));
   };
 
   const createQuestion = () => {
@@ -428,16 +477,24 @@
     questionNumberEl.textContent = `Question ${questionNumber + 1} of ${MAX_QUESTIONS}`;
 
   // Use options as-is, no shuffle
-  const optionsList = currentQuestion.options;
+  const imagesToDisplay = [
+      { type: 'ai', url: currentQuestion.aiImage },
+      { type: 'not-ai', url: currentQuestion.notAiImage }
+    ];
 
-  optionsList.forEach((opt) => {
-    const option = document.createElement("button");
-    option.classList.add("option");
-    option.textContent = opt;
-    option.addEventListener("click", checkAnswer);
-    options.appendChild(option);
-  });
-};
+    // Randomize the order of the two images
+    const shuffledImages = shuffleArray(imagesToDisplay);
+
+    shuffledImages.forEach((imgData) => {
+      const imageOption = document.createElement("img");
+      imageOption.classList.add("image-option");
+      imageOption.src = imgData.url;
+      imageOption.alt = imgData.type === 'ai' ? "AI-generated image" : "Original image";
+      imageOption.addEventListener("click", checkAnswer);
+      optionsDiv.appendChild(imageOption);
+    });
+  };
+
 
   const displayQuizResult = () => {
     quizResult.innerHTML = "";
@@ -453,21 +510,31 @@
       resultItem.classList.add("question-container");
 
       const userAnswer = localStorage.getItem(`userAnswer_${i}`) || "Not Answered";
-      const correctAnswer = quizData[i].correct;
+      const userAnswerStatus = localStorage.getItem(`userAnswer_${i}`);
 
-      if (userAnswer !== correctAnswer) {
+      if (userAnswerStatus === "Incorrect") {
         resultItem.classList.add("incorrect");
-      }
-      if (userAnswer == correctAnswer) {
+      } else if (userAnswerStatus === "Correct") {
         resultItem.classList.add("correct");
       }
 
+      let correctAnswerImageUrl;
+      if (currentQuestion.correctAnswerIsAI) {
+          correctAnswerImageUrl = currentQuestion.aiImage;
+      } else {
+          correctAnswerImageUrl = currentQuestion.notAiImage;
+      }
+
       resultItem.innerHTML = `
-        <img src="${quizData[i].question}" alt="Question ${i + 1}" style="max-height: 10vh">
-        <br>
-        <div><strong>Your answer:</strong><br>  ${userAnswer}</div>
-        <br>
-        <div><strong>Correct answer:</strong> <br> ${correctAnswer}</div>
+        <h3>Question ${i + 1}: ${currentQuestion.questionPrompt}</h3>
+        <div class="result-images">
+            <img src="${correctAnswerImageUrl}" alt="Correct Answer Image" class="result-image">
+        </div>
+        <div>
+            <strong>Your answer was:</strong> ${userAnswerStatus}
+            <br>
+            <strong>Explanation:</strong> ${currentQuestion.explanation}
+        </div>
       `;
 
       quizResult.appendChild(resultItem);
@@ -497,12 +564,18 @@
       createQuestion();
     }
   };
+	const returnBtn = document.querySelector(".return-btn"); // Selects the button with the class 'return-btn'
+
+  returnBtn.addEventListener("click", () => {
+    window.location.href = "https://www.investigatetv.com/page/manipulated/"; 
+  });
+
 
   nextBtn.addEventListener("click", displayNextQuestion);
 
   startBtn.addEventListener("click", () => {
-    startBtnContainer.style.display = "none";
-    quizContainer.style.display = "block";
+  document.getElementById("start-screen-wrapper").style.display = "none";
+  quizContainer.style.display = "block";
     resetLocalStorage();
     createQuestion();
   });
