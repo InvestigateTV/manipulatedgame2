@@ -4,418 +4,446 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>InvestigateTV - mAnIpulated Matchup: Which is which?</title>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <style>
   .quiz-container {
-  background: url("https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/manipulated_matchup_bg.png");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  font-family: "Arial", Helvetica, sans-serif;
-  font-color: #fff;
-  margin: 0 auto;
-  display: none;
-    padding: 6px;
-  align-items: center;
-}
+    background: url("https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/manipulated_matchup_bg.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    font-family: "Arial", Helvetica, sans-serif;
+    color: #fff; 
+    margin: 0 auto;
+    display: none;
+    align-items: center;
+  }
 
-.footer-image-container {
+  .footer-image-container {
     position: fixed;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 15vw; 
-    min-height: 50px; 
+    width: 15vw;
+    min-height: 50px;
     max-width: 175px;
-    padding-bottom: 6px; 
-    z-index: 1000; 
+    padding-bottom: 6px;
+    z-index: 1000;
     display: flex;
     justify-content: center;
-    align-items: flex-end; 
-    box-sizing: border-box; 
-}
+    align-items: flex-end;
+    box-sizing: border-box;
+  }
 
-.footer-image-container img {
+  .footer-image-container img {
     display: block;
     max-width: 100%;
     height: auto;
-}
+  }
 
-.quiz-container h1 {
-  font-family: "Arial", Helvetica, sans-serif;
-  font-weight: normal;
-  text-align: center;
-  color: #fff
-}
+  .quiz-container h1 {
+    font-family: "Arial", Helvetica, sans-serif;
+    font-weight: normal;
+    text-align: center;
+    color: #fff;
+    font-size: 22px;
+    padding: 18px;
+  }
 
-.quiz-container .options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-  justify-items: center;
-}
+  .quiz-container .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    justify-items: center;
+  }
 
-.quiz-container .image-option {
-  border: 3px solid transparent;
-  border-radius: 8px;
-  cursor: pointer;
-  max-width: 100%;
-  max-height: 30vh;
-  display: block;
-  object-fit: contain;
-}
+  /* WRAPPER for each image option (div) */
+  .quiz-container .image-option {
+    position: relative;          /* for ::after banner positioning */
+    border: 3px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;            /* clip banner rounding */
+    display: flex;               /* center the image nicely */
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0); 
+  }
+ 
+  .quiz-container .image-option img {
+    max-height: 27vh;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 8px;       
+  }
 
-.quiz-container button {
-  cursor: pointer;
-}
+  .quiz-container button {
+    cursor: pointer;
+  }
 
-.disabled {
-  pointer-events: none;
-}
+  .disabled {
+    pointer-events: none;
+  }
 
-.image-option.correct {
-  background: #A3C76E;
-  color: #222;
-  position: relative; 
-  border: 3px solid #415C1D; 
-}
 
-.image-option.correct::after {
-  content: "Correct!";
-  position: absolute;
-  top: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #A3C76E;
-  color: #222;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 14px;
-  white-space: nowrap;
-  border: 3px solid #415C1D
-}
+  .image-option.correct {
+    border: 6px solid #415C1D;
+  }
+  .image-option.incorrect {
+    border: 6px solid #b92b2b;
+  }
 
-.image-option.incorrect {
-  background: #EF5D4C;
-  position: relative;
-  border: 3px solid #b92b2b; 
-}
 
-.image-option.incorrect::after {
-  content: "Incorrect";
-  position: absolute;
-  top: -28px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #EF5D4C;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 14px;
-  white-space: nowrap;
-  border: 3px solid #b92b2b
-}
+  .image-option.correct::after {
+    content: "Correct!";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background: rgba(163,199,110,0.9);
+    color: #415C1D;
+    padding: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    z-index: 1000;
+  }
+  .image-option.incorrect::after {
+    content: "Incorrect";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background: rgba(239,93,76,0.9);
+    color: #850505;
+    padding: 6px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    z-index: 1000;
+  }
 
-.quiz-container .next-btn,
-.quiz-result .retake-btn {
-  background: #12326D;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 32px;
-  font-size: 20px;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 3px;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
-}
+  .quiz-container .next-btn,
+  .quiz-result .retake-btn {
+    background: #12326D;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 32px;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 3px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+  }
 
-.quiz-result {
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-  margin: 0 auto;
-  font-family: "Arial", Helvetica, sans-serif;
-  color: #fff;
-  padding: 8px;
-}
+  .quiz-result {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 auto;
+    font-family: "Arial", Helvetica, sans-serif;
+    color: #fff;
+    padding: 8px;
+  }
 
-.quiz-result h2 {
-  font-family: "Arial", Helvetica, sans-serif;
-  font-weight: normal;
-  text-align: center;
-  color: #fff
-}
+  .quiz-result h2 {
+    font-weight: normal;
+    text-align: center;
+    color: #fff
+  }
 
-.quiz-result .question-container {
-  padding: 6px;
-  border: 1px solid #9EB8EB;
-  display: flex;
-  height: 100%;
-  flex-flow: row;
-  flex-shrink: 3;
-  gap: 8px;
-  text-align: center;
-}
+  .quiz-result .question-container {
+    padding: 6px;
+    border: 1px solid #9EB8EB;
+    display: flex;
+    height: 100%;
+    flex-flow: row;
+    flex-shrink: 3;
+    gap: 8px;
+    text-align: center;
+  }
 
-.quiz-result .question-container .result-images {
+  .quiz-result .question-container .result-images {
     display: flex;
     gap: 8px;
     justify-content: center;
     width: 100%;
-}
+  }
 
-.quiz-result .question-container .result-image {
-    max-height: 10vh; 
-    max-width: 50%; /* Adjust width for single image */
+  .quiz-result .result-image {
+    max-height: 10vh;
+    max-width: 50%;
     height: auto;
     object-fit: contain;
     border-radius: 8px;
-}
-
-.quiz-result .question-container.incorrect {
-  background: #e63946;
-  color: #fff;
-}
-.quiz-result .question-container.correct
-{
-  background: #A3C76E;
-  color: #fff;
-}
-
-.question-number {
-  font-size: 12px;
-  background: #9EB8EB;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 16px 0;
-}
-
-@media (max-width: 700px) {
-  .quiz-container .options {
-    grid-template-columns: 1fr;
   }
-}
 
+  .quiz-result .question-container.incorrect {
+    background: #e63946;
+    color: #fff;
+  }
+  .quiz-result .question-container.correct {
+    background: #A3C76E;
+    color: #fff;
+  }
 
-.start-btn-container {
-  font-family: "Arial", Helvetica, sans-serif;
-  font-weight: normal;
-  color: #fff;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  .question-number {
+    font-size: 12px;
+    background: #9EB8EB;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 16px 0;
+  }
 
-.start-btn-container .start-msg {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(to bottom, rgba(0,0,0,0)0%, rgba(0,0,0,.7)30%, rgba(0,0,0,.9)50%, rgba(0,0,0,.7)70%, rgba(0,0,0,0)100%);
-  font-family: "Arial", Helvetica, sans-serif;
-  font-size: 20px;
-  font-weight: normal;
-  color: #fff;
-  padding: 20px 100%;
-  justify-content: center;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  white-space: nowrap;
-  align-items: center;
+  @media (max-width: 700px) {
+    .quiz-container .options {
+      grid-template-columns: 1fr;
+    }
+  }
 
-}
-.start-btn-container h2 {
-  font-size: 40px;
-  margin: 0;
-}
+  .start-btn-container {
+    font-family: "Arial", Helvetica, sans-serif;
+    font-weight: normal;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.start-btn-container .start-img {
-	position: fixed;
+  .start-btn-container .start-msg {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0)0%, rgba(0,0,0,.7)30%, rgba(0,0,0,.9)50%, rgba(0,0,0,.7)70%, rgba(0,0,0,0)100%);
+    font-size: 20px;
+    font-weight: normal;
+    color: #fff;
+    padding: 20px 100%;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    align-items: center;
+  }
+  .start-btn-container h2 {
+    font-size: 40px;
+    margin: 0;
+  }
+
+  .start-btn-container .start-img {
+    position: fixed;
     top: 0%;
-   	left: 50%;
+    left: 50%;
     transform: translateX(-50%);
     width: 100%;
     display: flex;
     justify-content: center;
     padding-bottom: 6px;
-}
+  }
 
-.start-btn-container .start-img img{
-	display: flex;
+  .start-btn-container .start-img img{
+    display: flex;
     max-width: 100%;
     height: auto;
     margin: 0 auto;
-}
+  }
 
-.start-btn-container .start-btn {
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  background: #9EB8EB;
-  color: #fff;
-  padding: 8px 32px;
-  border-radius: 8px;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-weight: bold;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  white-space: nowrap; 
-  gap: 5px; 
-}
+  .start-btn-container .start-btn {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    background: #9EB8EB;
+    color: #fff;
+    padding: 8px 32px;
+    border-radius: 8px;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    gap: 5px;
+  }
 
+  .return-btn-container {
+    position: fixed;
+    bottom: 80px;
+    font-family: "Arial", Helvetica, sans-serif;
+    font-weight: normal;
+    color: #000;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    gap: 15px;
+    z-index: 1001;
+    box-sizing: border-box;
+    background-color: #000;
+    border-radius: 8px;
+  }
 
-.return-btn-container {
-  position: fixed;
-  bottom: 80px;
-  font-family: "Arial", Helvetica, sans-serif;
-  font-weight: normal;
-  color: #000; 
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  white-space: nowrap; 
-  gap: 15px; 
-  z-index: 1001;
-  box-sizing: border-box;
-  background-color: #000;
-  border-radius: 8px;
-}
-
-.return-btn-container .return-btn .special-font {
-	font-family: "Montserrat", sans-serif;
+  .return-btn-container .return-btn .special-font {
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     color: #FFF;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     font-size:18px;
-}
+  }
 
-.return-btn-container .return-btn {
-  background: rgba(93, 146, 88, 0.7);
-  color: #FFF; 
-  padding: 6px 24px;
-  border-radius: 6px;
-  border: none;
-  font-size: 15px;
-  cursor: pointer;
-  font-weight: normal; 
-}
+  .return-btn-container .return-btn {
+    background: rgba(93, 146, 88, 0.7);
+    color: #FFF;
+    padding: 6px 24px;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: normal;
+  }
 
-
-.quiz-container img.question {
-  max-width: 100%;
-  max-height: 30vh; 
-  height: auto;
-  display: block;
-  margin: 1em auto;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
+  .quiz-container img.question {
+    max-width: 100%;
+    max-height: 30vh;
+    height: auto;
+    display: block;
+    margin: 1em auto;
+    object-fit: contain;
+    border-radius: 8px;
+  }
   </style>
 
-  
   <body style="background-color:#000000;">
     <div id="start-screen-wrapper">
-        <div class="start-img">
-            <img src="https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/manipulated_matchup.png" alt="Illustration of a hand below a glowing set of lines and dots designed to represent artificial intelligence. The words manipulated matchup are printed above the illustration" width=100% margin=0 >
+      <div class="start-img">
+        <img src="https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/manipulated_matchup.png" alt="Illustration..." width=100% margin=0 >
+      </div>
+      <br>
+      <div class="start-btn-container">
+        <div class="start-msg">
+          <p>Can you tell the difference between an <br> AI-manipulated image and the original?</p>
+          <br>
         </div>
-        <br>
-        <div class="start-btn-container">
-            <div class="start-msg">
-                <p>Can you tell the difference between an <br> AI-manipulated image and the original?</p>
-                <br>
-            </div>
-            <button class="start-btn">Start Quiz</button>
-        </div></div>
-    
+        <button class="start-btn">Start Quiz</button>
+      </div>
+    </div>
 
     <div class="quiz-container">
-      <h1>Is it AI?</h1>
+      <h1></h1>
       <div class="question-number"></div>
-      <img id="question-image" class="question" src="" alt="Question Image">
+      <img id="question-image" class="question" src="" alt="Question Image" style="display: none;">
       <div class="options"></div>
       <button class="next-btn">Next</button>
     </div>
 
     <div class="quiz-result"></div>
-   	<div class="return-btn-container">
-    <button class="return-btn">Exit to the <span class="special-font"> mAnIpulated</span> Homepage</button>
-</div>
-   	<div class="footer-image-container">
-    	<img src="https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/GTV-Clear-Logomark-RGB-color.png" alt="Gray Media Logo: Colorful partial circles arranged to form the letter G">
-</div>
+
+    <div class="return-btn-container">
+      <button class="return-btn">Exit to the <span class="special-font"> mAnIpulated</span> Homepage</button>
+    </div>
+    <div class="footer-image-container">
+      <img src="https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/GTV-Clear-Logomark-RGB-color.png" alt="Gray Media Logo: Colorful partial circles arranged to form the letter G">
+    </div>
   </body>
 
-  
 <script>
-   let quizData = [
+  let quizData = [
     {
       id: 1,
-      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-1.png",
-      notAiImage: "https://via.placeholder.com/300x200?text=Original+Image+1", // Placeholder
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-2.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-1.png",
       correctAnswerIsAI: true,
-      questionPrompt: "Which image is AI-generated?",
-      explanation: "This image exhibits typical characteristics of AI generation, such as subtle inconsistencies in texture and lighting that are uncommon in real photographs."
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "Additional skyscrapers were added using generative AI."
     },
     {
       id: 2,
-      aiImage: "https://via.placeholder.com/300x200?text=AI+Image+2", // Placeholder
-      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-2.png",
-      correctAnswerIsAI: false,
-      questionPrompt: "Which image is NOT AI-generated?",
-      explanation: "The clarity and natural detail in this image are consistent with an original photograph, lacking the common tells of AI manipulation."
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-4.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-3.png",
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "Vehicles were removed from two lanes of traffic using an AI photo editor."
     },
     {
       id: 3,
-      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-3.png",
-      notAiImage: "https://via.placeholder.com/300x200?text=Original+Image+3", // Placeholder
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-6.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-5.png",
       correctAnswerIsAI: true,
-      questionPrompt: "Which image is AI-generated?",
-      explanation: "Look closely at the background elements; AI often struggles with realistic depth and coherent details in complex scenes, making this image appear artificial."
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "A crumpled napkin and plastic spoon wrapper were added using generative AI."
     },
     {
       id: 4,
-      aiImage: "https://via.placeholder.com/300x200?text=AI+Image+4", // Placeholder
-      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-4.png",
-      correctAnswerIsAI: false,
-      questionPrompt: "Which image is NOT AI-generated?",
-      explanation: "The composition and fine details, especially around the edges of objects, suggest this is an authentic image rather than one produced by AI."
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-8.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-7.png",
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "A small rowboat, a different yacht and the setting sun were added using generative AI."
     },
     {
       id: 5,
-      aiImage: "https://via.placeholder.com/300x200?text=AI+Image+5", // Placeholder
-      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-5.png",
-      correctAnswerIsAI: false,
-      questionPrompt: "Which image is NOT AI-generated?",
-      explanation: "The subtle imperfections and realistic rendering of light and shadow point to this being an original photograph, not an AI creation."
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-10.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-9.png",
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "The black sportscar in the foreground was removed from two lanes of traffic using an AI photo editor."
     },
     {
       id: 6,
-      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame/main/images/Manipulated%20Game-6.png",
-      notAiImage: "https://via.placeholder.com/300x200?text=Original+Image+6", // Placeholder
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-12.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-11.png",
       correctAnswerIsAI: true,
-      questionPrompt: "Which image is AI-generated?",
-      explanation: "Notice the slight blurring or unusual patterns in the background, a common tell for AI-generated imagery that struggles with realism in secondary elements."
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "A pond with water lilies and a reflection of the skyline was added using generative AI."
+    },
+    {
+      id: 7,
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-14.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-13.png",
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "Wooden pallets and crates of seafood were added next to the truck using generative AI."
+    },
+    {
+      id: 8,
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-16.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-15.png",
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "The concrete fountain was removed using an AI photo editor."
+    },
+    {
+      id: 9,
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-18.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-17.png",
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "A kayak and paddle were added using generative AI."
+    },
+    {
+      id: 10,
+      aiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-20.png",
+      notAiImage: "https://raw.githubusercontent.com/InvestigateTV/manipulatedgame2/main/images/Manipulated_Game_2-19.png",
+      correctAnswerIsAI: true,
+      questionPrompt: "Which image has been altered using AI?",
+      explanation: "A white sailboat was added using generative AI."
     },
   ];
 
@@ -432,18 +460,18 @@
   const MAX_QUESTIONS = 5;
 
   const shuffleArray = (array) => array.slice().sort(() => Math.random() - 0.5);
-
   quizData = shuffleArray(quizData);
 
   const resetLocalStorage = () => {
     for (let i = 0; i < MAX_QUESTIONS; i++) {
       localStorage.removeItem(`userAnswer_${i}`);
- localStorage.removeItem(`userAnswerImageUrl_${i}`);
+      localStorage.removeItem(`userAnswerImageUrl_${i}`);
     }
   };
 
-   const checkAnswer = (e) => {
-    const clickedImage = e.target;
+  const checkAnswer = (e) => {
+    const clickedWrapper = e.currentTarget;               // .image-option div
+    const clickedImage = clickedWrapper.querySelector("img");
     const userAnswerImageUrl = clickedImage.src;
     const currentQuestion = quizData[questionNumber];
 
@@ -456,45 +484,49 @@
 
     if (isCorrect) {
       score++;
-      clickedImage.classList.add("correct");
+      clickedWrapper.classList.add("correct");
     } else {
-      clickedImage.classList.add("incorrect");
+      clickedWrapper.classList.add("incorrect");
     }
 
     localStorage.setItem(`userAnswer_${questionNumber}`, isCorrect ? "Correct" : "Incorrect");
     localStorage.setItem(`userAnswerImageUrl_${questionNumber}`, userAnswerImageUrl);
 
-
+    // disable further clicks this question
     const allImageOptions = document.querySelectorAll(".image-option");
-    allImageOptions.forEach((img) => img.classList.add("disabled"));
+    allImageOptions.forEach((opt) => opt.classList.add("disabled"));
   };
 
   const createQuestion = () => {
     const currentQuestion = quizData[questionNumber];
+    document.querySelector(".quiz-container h1").textContent = currentQuestion.questionPrompt;
 
     options.innerHTML = "";
-    questionImage.src = currentQuestion.question;
     questionNumberEl.textContent = `Question ${questionNumber + 1} of ${MAX_QUESTIONS}`;
 
-  // Use options as-is, no shuffle
-  const imagesToDisplay = [
+    const imagesToDisplay = [
       { type: 'ai', url: currentQuestion.aiImage },
       { type: 'not-ai', url: currentQuestion.notAiImage }
     ];
-
-    // Randomize the order of the two images
     const shuffledImages = shuffleArray(imagesToDisplay);
 
     shuffledImages.forEach((imgData) => {
-      const imageOption = document.createElement("img");
-      imageOption.classList.add("image-option");
-      imageOption.src = imgData.url;
-      imageOption.alt = imgData.type === 'ai' ? "AI-generated image" : "Original image";
-      imageOption.addEventListener("click", checkAnswer);
-      optionsDiv.appendChild(imageOption);
-    });
-  };
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("image-option");
 
+      const image = document.createElement("img");
+      image.src = imgData.url;
+      image.alt = imgData.type === 'ai' ? "AI-generated image" : "Original image";
+
+      wrapper.appendChild(image);
+      wrapper.addEventListener("click", checkAnswer);
+      options.appendChild(wrapper);
+    });
+
+    // re-enable clicks for new question
+    const allImageOptions = document.querySelectorAll(".image-option");
+    allImageOptions.forEach((opt) => opt.classList.remove("disabled"));
+  };
 
   const displayQuizResult = () => {
     quizResult.innerHTML = "";
@@ -509,7 +541,6 @@
       const resultItem = document.createElement("div");
       resultItem.classList.add("question-container");
 
-      const userAnswer = localStorage.getItem(`userAnswer_${i}`) || "Not Answered";
       const userAnswerStatus = localStorage.getItem(`userAnswer_${i}`);
 
       if (userAnswerStatus === "Incorrect") {
@@ -518,22 +549,28 @@
         resultItem.classList.add("correct");
       }
 
+      const questionForResults = quizData[i];
+
       let correctAnswerImageUrl;
-      if (currentQuestion.correctAnswerIsAI) {
-          correctAnswerImageUrl = currentQuestion.aiImage;
+      if (questionForResults.correctAnswerIsAI) {
+        correctAnswerImageUrl = questionForResults.aiImage;
       } else {
-          correctAnswerImageUrl = currentQuestion.notAiImage;
+        correctAnswerImageUrl = questionForResults.notAiImage;
       }
 
+      const imageDisplayHtml = `
+        <img src="${correctAnswerImageUrl}" alt="Correct Answer Image" class="result-image">
+      `;
+
       resultItem.innerHTML = `
-        <h3>Question ${i + 1}: ${currentQuestion.questionPrompt}</h3>
+        <h3>Question ${i + 1}: ${questionForResults.questionPrompt}</h3>
         <div class="result-images">
-            <img src="${correctAnswerImageUrl}" alt="Correct Answer Image" class="result-image">
+            ${imageDisplayHtml}
         </div>
         <div>
             <strong>Your answer was:</strong> ${userAnswerStatus}
             <br>
-            <strong>Explanation:</strong> ${currentQuestion.explanation}
+            <strong>Explanation:</strong> ${questionForResults.explanation}
         </div>
       `;
 
@@ -564,21 +601,21 @@
       createQuestion();
     }
   };
-	const returnBtn = document.querySelector(".return-btn"); // Selects the button with the class 'return-btn'
 
+  const returnBtn = document.querySelector(".return-btn");
   returnBtn.addEventListener("click", () => {
-    window.location.href = "https://www.investigatetv.com/page/manipulated/"; 
+    window.location.href = "https://www.investigatetv.com/page/manipulated/";
   });
-
 
   nextBtn.addEventListener("click", displayNextQuestion);
 
   startBtn.addEventListener("click", () => {
-  document.getElementById("start-screen-wrapper").style.display = "none";
-  quizContainer.style.display = "block";
+    document.getElementById("start-screen-wrapper").style.display = "none";
+    quizContainer.style.display = "block";
     resetLocalStorage();
     createQuestion();
   });
 </script>
 
 </html>
+
