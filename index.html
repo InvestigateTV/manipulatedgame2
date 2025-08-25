@@ -145,9 +145,12 @@
     flex-direction: column;
     gap: 8px;
     margin: 0 auto;
+    width: 100%;
+    max-width: 700px;
     font-family: "Arial", Helvetica, sans-serif;
     color: #fff;
     padding: 8px;
+    justify-content: center;
   }
 
   .quiz-result h2 {
@@ -164,19 +167,22 @@
     flex-flow: row;
     flex-shrink: 3;
     gap: 8px;
-    text-align: center;
+    text-align: left;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .quiz-result .question-container .result-images {
+    flex: 0 0 100px;
     display: flex;
     gap: 8px;
+    flex-direction: column;
     justify-content: center;
-    width: 100%;
   }
 
   .quiz-result .result-image {
     max-height: 10vh;
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
     object-fit: contain;
     border-radius: 8px;
@@ -563,7 +569,6 @@
       `;
 
       resultItem.innerHTML = `
-        <h3>Question ${i + 1}: ${questionForResults.questionPrompt}</h3>
         <div class="result-images">
             ${imageDisplayHtml}
         </div>
@@ -618,4 +623,3 @@
 </script>
 
 </html>
-
