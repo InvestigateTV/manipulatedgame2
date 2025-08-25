@@ -29,14 +29,14 @@ body, html {
 .quiz-container h1 {
   font-weight: normal;
   text-align: center;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .quiz-container .options {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin: 8px 0;
+  gap: 10px;
+  margin: 10px 0;
   justify-items: center;
 }
 
@@ -54,7 +54,7 @@ body, html {
 }
 
 .quiz-container .image-option img {
-  max-height: 20vh;
+  max-height: 25vh;
   max-width: 100%;
   height: auto;
   width: auto;
@@ -175,7 +175,18 @@ body, html {
   background: #A3C76E;
   color: #222;
 }
+/* ==== End of restored results ==== */
 
+.question-number {
+  font-size: 12px;
+  background: #9EB8EB;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  width: 100%;
+  margin: 16px 0;
+  box-sizing: border-box;
+}
 
 @media (max-width: 700px) {
   .quiz-container .options {
@@ -332,6 +343,7 @@ body, html {
 
     <div class="quiz-container">
       <h1></h1>
+      <div class="question-number"></div>
       <img id="question-image" class="question" src="" alt="Question Image" style="display: none;">
       <div class="options"></div>
       <button class="next-btn">Next</button>
